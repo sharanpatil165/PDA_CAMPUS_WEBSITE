@@ -41,6 +41,16 @@ Then visit [http://localhost:8080](http://localhost:8080)
 | `assets/js/app.js` | Search, map, page logic |
 | `assets/js/theme.js` | Dark / light mode |
 
+## Building photos (search shows images)
+
+When someone searches a department, library, canteen, or classroom, a **building photo** appears next to the result.
+
+1. Take photos on your phone.
+2. Save them in **`assets/img/buildings/`** using the names in **`assets/img/buildings/PHOTOS.md`** (e.g. `cse.jpg`, `library.jpg`, `canteen.jpg`).
+3. Refresh the site — your photos replace the placeholder automatically.
+
+Classrooms use their department’s photo (e.g. CS-401 → `cse.jpg`).
+
 ## Editing campus data
 
 All locations are in **`assets/js/campus-data.js`**. Update `departments`, `classrooms`, `facilities`, or `blocks` when rooms or blocks change. Block/floor details in this demo are **representative** — verify against your campus layout for production use.

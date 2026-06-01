@@ -62,12 +62,25 @@
     return div.innerHTML;
   }
 
+  const PLACEHOLDER_IMG = typeof getPlaceholderImageUrl === "function"
+    ? getPlaceholderImageUrl()
+    : "assets/img/buildings/placeholder.svg";
+
+  function renderLocationImage(imageUrl, alt, size) {
+    const sz = size || "md";
+    const src = escapeHtml(imageUrl || PLACEHOLDER_IMG);
+    const altText = escapeHtml(alt || "Building photo");
+    const ph = escapeHtml(PLACEHOLDER_IMG);
+    return `<img class="location-thumb location-thumb--${sz}" src="${src}" alt="${altText}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${ph}';">`;
+  }
+
   function renderSuggestionHtml(item, query) {
     const block = getBlock(item.blockId);
     return `
       <a href="${item.url}" class="suggestion-item" role="option">
-        <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "classroom" ? "classroom" : "facility"}">${TYPE_LABELS[item.type]}</span>
-        <div class="flex-grow-1 min-w-0">
+        ${renderLocationImage(item.imageUrl, item.name, "sm")}
+        <div class="suggestion-item-body flex-grow-1 min-w-0">
+          <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "classroom" ? "classroom" : "facility"}">${TYPE_LABELS[item.type]}</span>
           <div class="fw-semibold text-truncate">${highlightMatch(item.name, query)}</div>
           <small class="text-muted-pdacek">${escapeHtml(block?.name || "")} · ${escapeHtml(item.floor || "")}</small>
         </div>
@@ -77,15 +90,24 @@
   function renderResultCard(item, query) {
     const block = getBlock(item.blockId);
     return `
-      <article class="result-card position-relative">
-        <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "classroom" ? "classroom" : "facility"} mb-2">${TYPE_LABELS[item.type]}</span>
-        <h3 class="h5 mb-1">${highlightMatch(item.name, query)}</h3>
-        <p class="text-muted-pdacek small mb-2">
-          <strong>${escapeHtml(block?.name || "Campus")}</strong> · ${escapeHtml(item.floor || "—")}
-        </p>
-        <p class="small mb-0">${escapeHtml((item.directions || "").slice(0, 120))}${(item.directions || "").length > 120 ? "…" : ""}</p>
-        <a href="${item.url}" class="stretched-link" aria-label="View ${escapeHtml(item.name)}"></a>
+      <article class="result-card result-card--with-photo">
+        <div class="result-card-photo">
+          ${renderLocationImage(item.imageUrl, item.name, "lg")}
+        </div>
+        <div class="result-card-body position-relative">
+          <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "classroom" ? "classroom" : "facility"} mb-2">${TYPE_LABELS[item.type]}</span>
+          <h3 class="h5 mb-1">${highlightMatch(item.name, query)}</h3>
+          <p class="text-muted-pdacek small mb-2">
+            <strong>${escapeHtml(block?.name || "Campus")}</strong> · ${escapeHtml(item.floor || "—")}
+          </p>
+          <p class="small mb-0">${escapeHtml((item.directions || "").slice(0, 120))}${(item.directions || "").length > 120 ? "…" : ""}</p>
+          <a href="${item.url}" class="stretched-link" aria-label="View ${escapeHtml(item.name)}"></a>
+        </div>
       </article>`;
+  }
+
+  function renderDetailHeroImage(imageUrl, alt) {
+    return `<div class="detail-hero-photo mb-3">${renderLocationImage(imageUrl, alt, "hero")}</div>`;
   }
 
   function setupSearchInput(inputEl, dropdownEl, options) {
@@ -206,9 +228,11 @@
       ["library", "canteen", "admin"].includes(f.id)
     );
 
+    const deptImage = getRecordImageUrl(dept, "department");
     container.innerHTML = `
       <div class="detail-hero mb-4">
         <div class="container">
+          ${renderDetailHeroImage(deptImage, dept.name)}
           <span class="badge-type badge-dept mb-2">Department</span>
           <h1 class="display-6 fw-bold">${escapeHtml(dept.name)}</h1>
           <p class="text-muted-pdacek mb-0">${escapeHtml(block?.name || "")} · ${escapeHtml(dept.floor)}</p>
@@ -271,10 +295,12 @@
       }
       if (grid) grid.classList.add("d-none");
       const block = getBlock(facility.blockId);
+      const facilityImage = getRecordImageUrl(facility, "facility");
       detail.innerHTML = `
         <div class="detail-hero mb-4">
           <div class="container">
             <a href="facilities.html" class="small text-muted-pdacek">← All facilities</a>
+            ${renderDetailHeroImage(facilityImage, facility.name)}
             <span class="badge-type badge-facility mb-2 d-inline-block ms-0 mt-2">Facility</span>
             <h1 class="display-6 fw-bold">${escapeHtml(facility.name)}</h1>
             <p class="text-muted-pdacek mb-0">${escapeHtml(facility.category)} · ${escapeHtml(block?.name || "")}</p>
@@ -309,16 +335,22 @@
     if (grid) {
       grid.innerHTML = campusData.facilities
         .map(
-          (f) => `
+          (f) => {
+            const img = getRecordImageUrl(f, "facility");
+            return `
         <div class="col-md-6 col-lg-4">
-          <a href="facilities.html?id=${f.id}" class="text-decoration-none">
-            <div class="card-pdacek p-4 h-100">
-              <span class="badge-type badge-facility mb-2">${escapeHtml(f.category)}</span>
-              <h3 class="h5 text-body">${escapeHtml(f.name)}</h3>
-              <p class="text-muted-pdacek small mb-0">${escapeHtml((f.description || "").slice(0, 80))}…</p>
+          <a href="facilities.html?id=${f.id}" class="text-decoration-none facility-card-link">
+            <div class="card-pdacek card-pdacek--with-photo h-100 overflow-hidden">
+              <div class="facility-card-photo">${renderLocationImage(img, f.name, "card")}</div>
+              <div class="p-4">
+                <span class="badge-type badge-facility mb-2">${escapeHtml(f.category)}</span>
+                <h3 class="h5 text-body">${escapeHtml(f.name)}</h3>
+                <p class="text-muted-pdacek small mb-0">${escapeHtml((f.description || "").slice(0, 80))}…</p>
+              </div>
             </div>
           </a>
-        </div>`
+        </div>`;
+          }
         )
         .join("");
     }
@@ -340,7 +372,9 @@
         r.classList.toggle("active", r.dataset.blockId === blockId);
       });
 
-      let html = `<h3 class="h5 fw-bold">${escapeHtml(block.name)}</h3>
+      const blockImg = getRecordImageUrl(block, "block");
+      let html = `${renderLocationImage(blockImg, block.name, "card")}
+        <h3 class="h5 fw-bold mt-3">${escapeHtml(block.name)}</h3>
         <p class="small text-muted-pdacek">${escapeHtml(block.description)}</p>`;
 
       if (departments.length) {

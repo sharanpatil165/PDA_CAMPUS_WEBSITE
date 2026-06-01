@@ -13,21 +13,25 @@ const campusData = {
     mapCoords: { lat: 17.3297, lng: 76.8343 },
   },
 
+  /** Base path for building photos (see assets/img/buildings/PHOTOS.md) */
+  buildingPhotosPath: "assets/img/buildings",
+  placeholderImage: "assets/img/buildings/placeholder.svg",
+
   blocks: [
-    { id: "block-a", name: "Administrative Block", description: "Main entrance, principal office, exam section, accounts.", svgRegionId: "region-admin" },
-    { id: "block-b", name: "Civil Engineering Block", description: "Civil department offices and laboratories.", svgRegionId: "region-civil" },
-    { id: "block-c", name: "Mechanical & Automobile Block", description: "Mechanical workshops, CAD/CAM, automobile labs.", svgRegionId: "region-mech" },
-    { id: "block-d", name: "Electronics & Communication Block", description: "ECE labs, communication and VLSI facilities.", svgRegionId: "region-ece" },
-    { id: "block-e", name: "Electrical & Electronics Block", description: "EEE machines lab, power electronics.", svgRegionId: "region-eee" },
-    { id: "block-f", name: "Computer Science Block", description: "CSE/CSD labs, programming and network labs.", svgRegionId: "region-cse" },
-    { id: "block-g", name: "Information Science Block", description: "ISE and AIML programs, software labs.", svgRegionId: "region-ise" },
-    { id: "block-h", name: "Instrumentation Block", description: "EIE process control and DSP labs.", svgRegionId: "region-eie" },
-    { id: "block-i", name: "Ceramic & Cement Technology Block", description: "CCT refractory and materials labs.", svgRegionId: "region-cct" },
-    { id: "block-j", name: "Industrial & Production Block", description: "IPE manufacturing and industrial engineering labs.", svgRegionId: "region-ipe" },
-    { id: "block-k", name: "Basic Sciences Block", description: "Physics, Chemistry, Mathematics departments.", svgRegionId: "region-science" },
-    { id: "block-l", name: "First Year Block", description: "Common first-year classrooms and tutorial halls.", svgRegionId: "region-fy" },
-    { id: "block-m", name: "Central Library", description: "Multi-storey library with reading halls.", svgRegionId: "region-library" },
-    { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, sports, SAC, stationary.", svgRegionId: "region-services" },
+    { id: "block-a", name: "Administrative Block", description: "Main entrance, principal office, exam section, accounts.", svgRegionId: "region-admin", imageKey: "admin" },
+    { id: "block-b", name: "Civil Engineering Block", description: "Civil department offices and laboratories.", svgRegionId: "region-civil", imageKey: "civil" },
+    { id: "block-c", name: "Mechanical & Automobile Block", description: "Mechanical workshops, CAD/CAM, automobile labs.", svgRegionId: "region-mech", imageKey: "mech" },
+    { id: "block-d", name: "Electronics & Communication Block", description: "ECE labs, communication and VLSI facilities.", svgRegionId: "region-ece", imageKey: "ece" },
+    { id: "block-e", name: "Electrical & Electronics Block", description: "EEE machines lab, power electronics.", svgRegionId: "region-eee", imageKey: "eee" },
+    { id: "block-f", name: "Computer Science Block", description: "CSE/CSD labs, programming and network labs.", svgRegionId: "region-cse", imageKey: "cse" },
+    { id: "block-g", name: "Information Science Block", description: "ISE and AIML programs, software labs.", svgRegionId: "region-ise", imageKey: "ise" },
+    { id: "block-h", name: "Instrumentation Block", description: "EIE process control and DSP labs.", svgRegionId: "region-eie", imageKey: "eie" },
+    { id: "block-i", name: "Ceramic & Cement Technology Block", description: "CCT refractory and materials labs.", svgRegionId: "region-cct", imageKey: "cct" },
+    { id: "block-j", name: "Industrial & Production Block", description: "IPE manufacturing and industrial engineering labs.", svgRegionId: "region-ipe", imageKey: "ipe" },
+    { id: "block-k", name: "Basic Sciences Block", description: "Physics, Chemistry, Mathematics departments.", svgRegionId: "region-science", imageKey: "science" },
+    { id: "block-l", name: "First Year Block", description: "Common first-year classrooms and tutorial halls.", svgRegionId: "region-fy", imageKey: "fy" },
+    { id: "block-m", name: "Central Library", description: "Multi-storey library with reading halls.", svgRegionId: "region-library", imageKey: "library" },
+    { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, sports, SAC, stationary.", svgRegionId: "region-services", imageKey: "canteen" },
   ],
 
   departments: [
@@ -323,6 +327,26 @@ function getClassroom(id) {
   return campusData.classrooms.find((c) => c.id === id);
 }
 
+/** Photo filename key for a department, facility, or block */
+function getImageKey(type, id, blockId, deptId) {
+  if (type === "department") return id;
+  if (type === "facility") return id;
+  if (type === "classroom" && deptId) return deptId;
+  const block = getBlock(blockId);
+  return block?.imageKey || id;
+}
+
+/** Full image URL for search results and detail pages */
+function getLocationImageUrl(type, id, blockId, deptId) {
+  const base = campusData.buildingPhotosPath;
+  const key = getImageKey(type, id, blockId, deptId);
+  return `${base}/${key}.jpg`;
+}
+
+function getPlaceholderImageUrl() {
+  return campusData.placeholderImage;
+}
+
 /** All searchable items with type */
 function getAllSearchableItems() {
   const items = [];
@@ -335,6 +359,7 @@ function getAllSearchableItems() {
       floor: d.floor,
       directions: d.directions,
       keywords: d.keywords || [],
+      imageUrl: getLocationImageUrl("department", d.id, d.blockId),
       url: `department.html?id=${d.id}`,
     });
   });
@@ -345,9 +370,11 @@ function getAllSearchableItems() {
       id: c.id,
       name: c.name,
       blockId: c.blockId,
+      deptId: c.deptId,
       floor: c.floor,
       directions: c.directions,
       keywords: [dept?.name || "", c.room],
+      imageUrl: getLocationImageUrl("classroom", c.id, c.blockId, c.deptId),
       url: `search.html?q=${encodeURIComponent(c.name)}`,
     });
   });
@@ -360,10 +387,23 @@ function getAllSearchableItems() {
       floor: f.floor,
       directions: f.directions,
       keywords: f.keywords || [],
+      imageUrl: getLocationImageUrl("facility", f.id, f.blockId),
       url: `facilities.html?id=${f.id}`,
     });
   });
   return items;
+}
+
+/** Image URL for department or facility record */
+function getRecordImageUrl(record, type) {
+  if (record.image) return record.image;
+  if (type === "department") return getLocationImageUrl("department", record.id, record.blockId);
+  if (type === "facility") return getLocationImageUrl("facility", record.id, record.blockId);
+  if (type === "block") {
+    const key = record.imageKey || record.id;
+    return `${campusData.buildingPhotosPath}/${key}.jpg`;
+  }
+  return getPlaceholderImageUrl();
 }
 
 /** Items in a block */

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+  <rect width="48" height="48" rx="8" fill="#1a3a6b"/>
+  <path d="M24 8 L38 38 H10 Z" fill="none" stroke="#c9a227" stroke-width="2.5"/>
+  <circle cx="24" cy="22" r="4" fill="#c9a227"/>
+  <text x="24" y="44" text-anchor="middle" fill="#fff" font-size="7" font-family="system-ui,sans-serif" font-weight="bold">PDA</text>
+</svg>

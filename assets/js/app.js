@@ -1,6 +1,6 @@
 (function () {
-  const TYPE_ORDER = { department: 0, classroom: 1, facility: 2 };
-  const TYPE_LABELS = { department: "Dept", classroom: "Room", facility: "Facility" };
+  const TYPE_ORDER = { department: 0, faculty: 1, classroom: 2, facility: 3, lab: 4 };
+  const TYPE_LABELS = { department: "Dept", classroom: "Room", facility: "Facility", faculty: "Faculty", lab: "Lab" };
 
   function normalize(str) {
     return (str || "").toLowerCase().trim();
@@ -29,7 +29,7 @@
     if (!q) return [];
     let items = getAllSearchableItems();
     if (filterType && filterType !== "all") {
-      const map = { departments: "department", classrooms: "classroom", facilities: "facility" };
+      const map = { departments: "department", classrooms: "classroom", facilities: "facility", faculty: "faculty", labs: "lab" };
       const type = map[filterType] || filterType;
       items = items.filter((i) => i.type === type);
     }
@@ -80,7 +80,7 @@
       <a href="${item.url}" class="suggestion-item" role="option">
         ${renderLocationImage(item.imageUrl, item.name, "sm")}
         <div class="suggestion-item-body flex-grow-1 min-w-0">
-          <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "classroom" ? "classroom" : "facility"}">${TYPE_LABELS[item.type]}</span>
+          <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "faculty" ? "faculty" : item.type === "classroom" ? "classroom" : item.type === "lab" ? "lab" : "facility"}">${TYPE_LABELS[item.type] || item.type}</span>
           <div class="fw-semibold text-truncate">${highlightMatch(item.name, query)}</div>
           <small class="text-muted-pdacek">${escapeHtml(block?.name || "")} · ${escapeHtml(item.floor || "")}</small>
         </div>
@@ -95,7 +95,7 @@
           ${renderLocationImage(item.imageUrl, item.name, "lg")}
         </div>
         <div class="result-card-body position-relative">
-          <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "classroom" ? "classroom" : "facility"} mb-2">${TYPE_LABELS[item.type]}</span>
+          <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "faculty" ? "faculty" : item.type === "classroom" ? "classroom" : item.type === "lab" ? "lab" : "facility"} mb-2">${TYPE_LABELS[item.type] || item.type}</span>
           <h3 class="h5 mb-1">${highlightMatch(item.name, query)}</h3>
           <p class="text-muted-pdacek small mb-2">
             <strong>${escapeHtml(block?.name || "Campus")}</strong> · ${escapeHtml(item.floor || "—")}
@@ -229,6 +229,45 @@
     );
 
     const deptImage = getRecordImageUrl(dept, "department");
+    const deptFaculty = typeof getFacultyByDept === "function" ? getFacultyByDept(id) : [];
+    const deptLabs = typeof getLabsByDept === "function" ? getLabsByDept(id) : [];
+
+    let facultyHtml = "";
+    if (deptFaculty.length > 0) {
+      facultyHtml = `
+            <div class="card-pdacek p-4 mb-4">
+              <h2 class="h5 section-title">👨‍🏫 Faculty Roster</h2>
+              <div class="faculty-roster">
+                ${deptFaculty.map((f) => `
+                  <div class="faculty-row">
+                    <div class="faculty-info">
+                      <strong>${escapeHtml(f.name)}</strong>
+                      <span class="text-muted-pdacek small">${escapeHtml(f.role)}</span>
+                    </div>
+                    <div class="faculty-room">
+                      <span class="badge bg-secondary bg-opacity-25 text-body">${escapeHtml(f.room)}</span>
+                      <small class="text-muted-pdacek">${escapeHtml(f.floor)}</small>
+                    </div>
+                  </div>`).join("")}
+              </div>
+            </div>`;
+    }
+
+    let labsDetailHtml = "";
+    if (deptLabs.length > 0) {
+      labsDetailHtml = deptLabs.map((l) => `
+            <div class="card-pdacek p-4 mb-4">
+              <div class="row g-3 align-items-center">
+                <div class="col-md-4">${renderLocationImage(getLabImageUrl(l), l.name, "card")}</div>
+                <div class="col-md-8">
+                  <h3 class="h6 fw-bold mb-1">${escapeHtml(l.name)}</h3>
+                  <p class="small text-muted-pdacek mb-1">${escapeHtml(l.description || "")}</p>
+                  <p class="small mb-0"><strong>Equipment:</strong> ${escapeHtml(l.equipment || "—")}</p>
+                </div>
+              </div>
+            </div>`).join("");
+    }
+
     container.innerHTML = `
       <div class="detail-hero mb-4">
         <div class="container">
@@ -246,14 +285,16 @@
               <p>${escapeHtml(dept.directions)}</p>
               <a href="map.html?highlight=${encodeURIComponent(dept.blockId)}" class="btn btn-pdacek-accent">View on campus map</a>
             </div>
+            ${facultyHtml}
             <div class="card-pdacek p-4 mb-4">
               <h2 class="h5 section-title">Classrooms</h2>
               <ul class="mb-0">${dept.classrooms.map((c) => `<li>${escapeHtml(c)}</li>`).join("")}</ul>
             </div>
-            <div class="card-pdacek p-4">
+            <div class="card-pdacek p-4 mb-4">
               <h2 class="h5 section-title">Laboratories</h2>
               <ul class="mb-0">${dept.labs.map((l) => `<li>${escapeHtml(l)}</li>`).join("")}</ul>
             </div>
+            ${labsDetailHtml}
           </div>
           <div class="col-lg-4">
             <div class="card-pdacek p-4 mb-4">
@@ -261,7 +302,7 @@
               <dl class="info-list mb-0">
                 <dt>Block</dt><dd>${escapeHtml(block?.name || "—")}</dd>
                 <dt>Floor</dt><dd>${escapeHtml(dept.floor)}</dd>
-                <dt>Office</dt><dd>${escapeHtml(dept.hod)}</dd>
+                <dt>HOD</dt><dd>${escapeHtml(dept.hod)}</dd>
               </dl>
             </div>
             <div class="card-pdacek p-4">

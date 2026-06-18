@@ -1,39 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --pdacek-primary: #1a3a6b;
-  --pdacek-primary-light: #2a5298;
+  --pdacek-primary: #2563a8;
+  --pdacek-primary-light: #4a8fd4;
   --pdacek-accent: #c9a227;
   --pdacek-accent-hover: #ddb52e;
-  --pdacek-bg: #f4f6f9;
-  --pdacek-surface: #ffffff;
-  --pdacek-text: #1a1a2e;
-  --pdacek-text-muted: #5c6370;
-  --pdacek-border: #dde2ea;
-  --pdacek-shadow: 0 4px 20px rgba(26, 58, 107, 0.08);
-  --pdacek-hero-overlay: rgba(26, 58, 107, 0.85);
+  --pdacek-bg: #f5f0e8;
+  --pdacek-surface: #fdf9f3;
+  --pdacek-text: #2a1f0e;
+  --pdacek-text-muted: #7a6a55;
+  --pdacek-border: #e2d8c8;
+  --pdacek-shadow: 0 4px 20px rgba(60, 40, 10, 0.09);
+  --pdacek-hero-overlay: rgba(30, 80, 150, 0.18);
   --pdacek-success: #198754;
   --pdacek-danger: #dc3545;
-  --pdacek-map-hover: rgba(201, 162, 39, 0.35);
-  --pdacek-map-active: rgba(201, 162, 39, 0.55);
+  --pdacek-map-hover: rgba(74, 143, 212, 0.35);
+  --pdacek-map-active: rgba(74, 143, 212, 0.55);
+  --pdacek-sky-start: #6db8e8;
+  --pdacek-sky-end: #a8d8f0;
 }
 
 [data-theme="dark"] {
-  --pdacek-primary: #4a7bc8;
-  --pdacek-primary-light: #6b9ae0;
+  --pdacek-primary: #4a9de0;
+  --pdacek-primary-light: #6bb5f0;
   --pdacek-accent: #e0b83d;
   --pdacek-accent-hover: #f0cc55;
-  --pdacek-bg: #0f1419;
-  --pdacek-surface: #1a2332;
-  --pdacek-text: #e8ecf1;
-  --pdacek-text-muted: #9aa5b4;
-  --pdacek-border: #2d3a4d;
-  --pdacek-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-  --pdacek-hero-overlay: rgba(15, 20, 25, 0.92);
+  --pdacek-bg: #12100c;
+  --pdacek-surface: #1c1812;
+  --pdacek-text: #f0ead8;
+  --pdacek-text-muted: #9a9080;
+  --pdacek-border: #2e2820;
+  --pdacek-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --pdacek-hero-overlay: rgba(10, 20, 35, 0.75);
+  --pdacek-sky-start: #1a3a5c;
+  --pdacek-sky-end: #0f2840;
 }
 
 body {
   background-color: var(--pdacek-bg);
+  /* subtle paper grain texture */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   color: var(--pdacek-text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -90,18 +99,35 @@ main {
 }
 
 .hero-section {
-  background: linear-gradient(135deg, var(--pdacek-primary) 0%, var(--pdacek-primary-light) 100%);
-  color: #fff;
-  padding: 4rem 0 5rem;
+  background:
+    linear-gradient(180deg,
+      var(--pdacek-sky-start) 0%,
+      var(--pdacek-sky-end) 55%,
+      #c8e8f8 100%);
+  color: #0d1f35;
+  padding: 4.5rem 0 5.5rem;
   position: relative;
   overflow: hidden;
+}
+
+/* soft cloud blobs */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: -30px; left: -60px;
+  width: 520px; height: 340px;
+  background: radial-gradient(ellipse at 40% 40%, rgba(255,255,255,0.55) 0%, transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .hero-section::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.15), transparent 50%);
+  bottom: -40px; right: -80px;
+  width: 480px; height: 320px;
+  background: radial-gradient(ellipse at 60% 50%, rgba(255,255,255,0.45) 0%, transparent 65%);
+  border-radius: 50%;
   pointer-events: none;
 }
 
@@ -111,14 +137,29 @@ main {
 }
 
 .hero-badge {
-  background: var(--pdacek-accent);
-  color: #1a1a2e;
-  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.75);
+  color: #1a3a6b;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.35rem 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
   border-radius: 2rem;
   display: inline-block;
   margin-bottom: 1rem;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+.hero-section h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #0a1e3d;
+  text-shadow: 0 2px 12px rgba(255,255,255,0.4);
+}
+
+.hero-section .lead {
+  color: #1a3050;
+  font-weight: 500;
 }
 
 .card-pdacek {
@@ -177,9 +218,11 @@ main {
 }
 
 .hero-section .search-input {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: transparent;
-  color: #1a1a2e;
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #0d1f35;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 16px rgba(30, 80, 150, 0.12);
 }
 
 .search-icon {
@@ -232,9 +275,9 @@ main {
 }
 
 .location-thumb {
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 0.5rem;
-  background: var(--pdacek-border);
+  background: var(--pdacek-surface);
   flex-shrink: 0;
 }
 
@@ -263,11 +306,12 @@ main {
 
 .location-thumb--hero {
   width: 100%;
-  max-height: 280px;
+  max-height: 340px;
   height: auto;
   min-height: 180px;
   border-radius: 0.75rem;
-  object-fit: cover;
+  object-fit: contain;
+  background: var(--pdacek-surface);
 }
 
 .result-card--with-photo {
@@ -357,6 +401,51 @@ main {
 .badge-facility {
   background: var(--pdacek-accent);
   color: #1a1a2e;
+}
+
+.badge-faculty {
+  background: #0d9488;
+  color: #fff;
+}
+
+.badge-lab {
+  background: #198754;
+  color: #fff;
+}
+
+/* Faculty roster on department pages */
+.faculty-roster {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faculty-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--pdacek-border);
+  gap: 1rem;
+}
+
+.faculty-row:last-child {
+  border-bottom: none;
+}
+
+.faculty-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.faculty-room {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  flex-shrink: 0;
 }
 
 .filter-chips {

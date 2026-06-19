@@ -30,7 +30,7 @@ const campusData = {
     { id: "block-k", name: "Basic Sciences Block", description: "Physics, Chemistry, Mathematics departments.", svgRegionId: "region-science", imageKey: "science", photo: "chemistry-dept.jpg" },
     { id: "block-l", name: "First Year Block", description: "Common first-year classrooms and tutorial halls.", svgRegionId: "region-fy", imageKey: "fy", photo: "1st-yearblock.jpg" },
     { id: "block-m", name: "Central Library", description: "Multi-storey library with reading halls.", svgRegionId: "region-library", imageKey: "library", photo: "library.jpg" },
-    { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, cooperative store, sports club, 1000-capacity auditorium, first aid & medical facilities.", svgRegionId: "region-services", imageKey: "canteen", photo: "canteen.jpg" },
+    { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, cooperative store, 1000-capacity auditorium, first aid & medical facilities.", svgRegionId: "region-services", imageKey: "canteen", photo: "canteen.jpg" },
   ],
 
   departments: [
@@ -340,18 +340,7 @@ const campusData = {
       keywords: ["medical", "health", "clinic"],
       description: "First aid and basic medical support for students and staff.",
     },
-    {
-      id: "sports",
-      name: "Sports Ground & Indoor Stadium",
-      category: "Sports",
-      blockId: "block-n",
-      floor: "Outdoor / Ground Floor",
-      hours: "Mon–Sat: 6:00 AM – 6:00 PM",
-      photo: "sports-complex.jpg",
-      directions: "Behind Student Services Zone; follow sports pavilion boards.",
-      keywords: ["sports", "ground", "gym", "stadium", "basketball", "cricket", "badminton"],
-      description: "Playground, indoor stadium, and gymnasium facilities — basketball, cricket, and badminton.",
-    },
+
     {
       id: "bank",
       name: "Canara Bank (Campus Branch)",

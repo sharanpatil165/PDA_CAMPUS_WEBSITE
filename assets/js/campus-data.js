@@ -31,7 +31,6 @@ const campusData = {
     { id: "block-l", name: "First Year Block", description: "Common first-year classrooms and tutorial halls.", svgRegionId: "region-fy", imageKey: "fy", photo: "1st-yearblock.jpg" },
     { id: "block-m", name: "Central Library", description: "Multi-storey library with reading halls.", svgRegionId: "region-library", imageKey: "library", photo: "library.jpg" },
     { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, cooperative store, sports club, 1000-capacity auditorium, first aid & medical facilities.", svgRegionId: "region-services", imageKey: "canteen", photo: "canteen.jpg" },
-    { id: "block-o", name: "Hostel Block", description: "Boys and girls hostels. Residential accommodation for outstation students.", svgRegionId: "region-hostel", imageKey: "hostel", photo: "placeholder.svg" },
   ],
 
   departments: [
@@ -471,17 +470,7 @@ const campusData = {
       keywords: ["admin", "principal", "office"],
       description: "Principal office, exam section, and college administration.",
     },
-    {
-      id: "hostel",
-      name: "Hostel (Boys & Girls)",
-      category: "Residential",
-      blockId: "block-o",
-      floor: "All Floors",
-      hours: "24 hours (residents only)",
-      directions: "Hostel block behind campus. Boys hostel and girls hostel are separate buildings within the campus.",
-      keywords: ["hostel", "boys hostel", "girls hostel", "accommodation", "residential"],
-      description: "On-campus residential accommodation for boys and girls. Managed by the college administration.",
-    },
+
     {
       id: "auditorium",
       name: "Auditorium (1000 Capacity)",

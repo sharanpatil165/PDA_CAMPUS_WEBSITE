@@ -136,7 +136,7 @@ main {
   color: #fff;
   padding: 5.5rem 0 6rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Mesh overlay for depth */

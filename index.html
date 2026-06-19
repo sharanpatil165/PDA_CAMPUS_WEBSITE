@@ -37,10 +37,20 @@
   </nav>
 
   <header class="hero-section">
+    <!-- Floating animated shapes -->
+    <div class="hero-shapes" aria-hidden="true">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+
     <div class="container text-center">
-      <span class="hero-badge">Smart Campus System</span>
-      <h1 class="display-5 fw-bold mb-3">Navigate P.D.A. College of Engineering</h1>
-      <p class="lead mb-4 col-lg-8 mx-auto opacity-90">
+      <span class="hero-badge">🎓 Smart Campus Navigation</span>
+      <h1 class="display-5 fw-bold mb-3">P.D.A. College of Engineering</h1>
+      <p class="lead mb-4 col-lg-8 mx-auto">
         Find departments, classrooms, laboratories, and campus facilities — block, floor, and directions at your fingertips.
       </p>
       <div class="search-wrapper mx-auto" role="search">
@@ -49,9 +59,23 @@
         <input type="search" id="home-search" class="search-input" placeholder="Search e.g. CSE, Library, Canteen…" autocomplete="off" aria-autocomplete="list" aria-controls="home-suggestions">
         <div id="home-suggestions" class="suggestions-dropdown" role="listbox"></div>
       </div>
-      <p class="small mt-3 opacity-75">Kalaburagi · Established 1958 · 71-acre campus</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">1958</span>
+          <span class="hero-stat-label">Established</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">71</span>
+          <span class="hero-stat-label">Acres</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">12+</span>
+          <span class="hero-stat-label">Departments</span>
+        </div>
+      </div>
     </div>
   </header>
+
 
   <main>
     <section class="py-5">

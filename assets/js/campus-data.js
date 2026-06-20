@@ -21,7 +21,7 @@ const campusData = {
     { id: "block-a", name: "Administrative Block", description: "Main entrance, principal office, exam section, accounts.", svgRegionId: "region-admin", imageKey: "admin", photo: "admin-tower.jpg" },
     { id: "block-b", name: "Civil Engineering Block", description: "Civil department offices and laboratories.", svgRegionId: "region-civil", imageKey: "civil", photo: "civil-dept.jpg" },
     { id: "block-c", name: "Mechanical & Automobile Block", description: "Mechanical workshops, CAD/CAM labs, Automobile Engineering.", svgRegionId: "region-mech", imageKey: "mech", photo: "mechanical-dept.jpg" },
-    { id: "block-p", name: "Architecture Block", description: "Architecture design studios, drawing halls, and model workshops.", svgRegionId: "region-arch", imageKey: "arch", photo: "placeholder.svg" },
+
     { id: "block-d", name: "Electronics & Communication Block", description: "ECE labs, communication and VLSI facilities.", svgRegionId: "region-ece", imageKey: "ece", photo: "ece-dept.jpg" },
     { id: "block-e", name: "Electrical & Electronics Block", description: "EEE machines lab, power electronics.", svgRegionId: "region-eee", imageKey: "eee", photo: "eee-dept.jpg" },
     { id: "block-f", name: "Computer Science Block", description: "CSE/CSD labs, programming and network labs.", svgRegionId: "region-cse", imageKey: "cse", photo: "cse-dept.jpg" },
@@ -31,6 +31,7 @@ const campusData = {
     { id: "block-l", name: "First Year Block", description: "Common first-year classrooms and tutorial halls.", svgRegionId: "region-fy", imageKey: "fy", photo: "1st-yearblock.jpg" },
     { id: "block-m", name: "Central Library", description: "Multi-storey library with reading halls.", svgRegionId: "region-library", imageKey: "library", photo: "library.jpg" },
     { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, cooperative store, 1000-capacity auditorium, first aid & medical facilities.", svgRegionId: "region-services", imageKey: "canteen", photo: "canteen.jpg" },
+    { id: "block-gate", name: "Main Gate", description: "Main entrance to the PDACEK campus. Security cabin, visitor registration, and start of the central road leading to all blocks.", svgRegionId: "region-gate", imageKey: "gate", photo: "main-gate.jpg" },
   ],
 
   departments: [
@@ -70,18 +71,7 @@ const campusData = {
       classrooms: ["AUTO-101", "AUTO-102"],
       labs: ["Automobile Servicing Lab", "Engine Testing Lab"],
     },
-    {
-      id: "arch",
-      name: "Architecture",
-      blockId: "block-p",
-      floor: "Ground & 1st Floor",
-      hod: "Department Office — Ground Floor",
-      photo: "placeholder.svg",
-      directions: "Architecture block — design studios with large open drawing halls. Located near the main entrance area.",
-      keywords: ["architecture", "arch", "design", "drawing", "studio"],
-      classrooms: ["ARCH-101", "ARCH-102", "Drawing Hall"],
-      labs: ["Design Studio", "Model Workshop", "Urban Planning Studio"],
-    },
+
     {
       id: "ece",
       name: "Electronics & Communication Engineering",

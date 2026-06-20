@@ -6,7 +6,7 @@ When someone searches that place, the photo appears automatically.
 ## Departments
 | Filename | Building |
 |----------|----------|
-| `civil.jpg` | Civil Engineering |
+| `civil-dept.jpg` | Civil Engineering |
 | `mech.jpg` | Mechanical & Automobile |
 | `ece.jpg` | Electronics & Communication |
 | `eee.jpg` | Electrical & Electronics |

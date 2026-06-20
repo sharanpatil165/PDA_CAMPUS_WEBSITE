@@ -61,8 +61,8 @@
             <text x="360" y="28" class="map-label" style="font-size: 14px;">PDACEK Campus — Schematic (71 acres · Main Gate at Bottom)</text>
 
             <!-- Main gate -->
-            <rect x="330" y="480" width="60" height="30" fill="#6c757d" rx="4"/>
-            <text x="360" y="500" class="map-label" fill="#fff">MAIN GATE</text>
+            <rect id="region-gate" class="map-region" data-block-id="block-gate" x="330" y="480" width="60" height="30" fill="#6c757d" rx="4"/>
+            <text x="360" y="500" class="map-label" fill="#fff" style="pointer-events:none;">MAIN GATE</text>
 
             <!-- Paths -->
             <path d="M360 480 L360 120" stroke="#adb5bd" stroke-width="8" fill="none" stroke-dasharray="4 4"/>
@@ -117,11 +117,6 @@
             <rect id="region-services" class="map-region" data-block-id="block-n" x="550" y="300" width="130" height="170" fill="#f5c6a8" rx="4"/>
             <text x="615" y="375" class="map-label">Canteen</text>
             <text x="615" y="390" class="map-label" style="font-size:8px">Auditorium · Bank</text>
-
-
-            <!-- block-p Architecture -->
-            <rect id="region-arch" class="map-region" data-block-id="block-p" x="450" y="60" width="90" height="80" fill="#f0e4c8" rx="4"/>
-            <text x="495" y="105" class="map-label">Arch</text>
 
             <text x="360" y="505" class="map-label" style="font-size:9px; fill:#6c757d;">Not to scale — for campus navigation demo</text>
           </svg>

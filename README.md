@@ -73,8 +73,14 @@ All locations are in **`assets/js/campus-data.js`**. Update `departments`, `clas
 - GPS-based navigation
 - AI route optimization
 - Mobile application
-- Voice assistant
+- need of Voice assistant
 - Indoor navigation (BLE / Wi‑Fi)
+- audio direction for users!
+- emergency navigation
+- fire extenguishers route and path
+- emergency exits
+- first aid center
+- ar navigation (use phone camera , veiw and display arrows and directions over the real world veiw make navigation more interactive)
 
 ## Presentation flow (suggested slides)
 

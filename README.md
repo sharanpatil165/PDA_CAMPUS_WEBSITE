@@ -26,7 +26,7 @@ cd ~/Documents/smart-campus-pda
 python3 -m http.server 8080
 ```
 
-Then visit [http://localhost:8080](http://localhost:8080)
+Then visit  https://pda-campus-website.vercel.app
 
 ## Project structure
 

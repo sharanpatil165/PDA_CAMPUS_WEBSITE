@@ -94,14 +94,17 @@
         <div class="result-card-photo">
           ${renderLocationImage(item.imageUrl, item.name, "lg")}
         </div>
-        <div class="result-card-body position-relative">
+        <div class="result-card-body">
           <span class="badge-type badge-${item.type === "department" ? "dept" : item.type === "faculty" ? "faculty" : item.type === "classroom" ? "classroom" : item.type === "lab" ? "lab" : "facility"} mb-2">${TYPE_LABELS[item.type] || item.type}</span>
           <h3 class="h5 mb-1">${highlightMatch(item.name, query)}</h3>
           <p class="text-muted-pdacek small mb-2">
             <strong>${escapeHtml(block?.name || "Campus")}</strong> · ${escapeHtml(item.floor || "—")}
           </p>
-          <p class="small mb-0">${escapeHtml((item.directions || "").slice(0, 120))}${(item.directions || "").length > 120 ? "…" : ""}</p>
-          <a href="${item.url}" class="stretched-link" aria-label="View ${escapeHtml(item.name)}"></a>
+          <p class="small mb-2">${escapeHtml((item.directions || "").slice(0, 120))}${(item.directions || "").length > 120 ? "…" : ""}</p>
+          <div class="d-flex gap-2">
+            <a href="map.html?highlight=${encodeURIComponent(item.blockId)}" class="btn btn-sm btn-outline-primary py-1 px-3">🗺️ Show on Map</a>
+            <a href="${item.url}" class="btn btn-sm btn-primary py-1 px-3">🔍 View Details</a>
+          </div>
         </div>
       </article>`;
   }
@@ -400,9 +403,141 @@
   function initMapPage() {
     const sidebar = document.getElementById("map-sidebar-content");
     const tooltip = document.getElementById("map-tooltip");
+    const svg = document.querySelector(".campus-svg");
     if (!sidebar) return;
 
     const highlightId = new URLSearchParams(window.location.search).get("highlight");
+
+    const routes = {
+      "block-gate": {
+        path: "M 380 570",
+        steps: ["You are at the Main Gate entry point."]
+      },
+      "block-a": {
+        path: "M 380 570 L 380 405",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight along the central road for ~50 meters.",
+          "The Admin Block is directly in front of you on the central road."
+        ]
+      },
+      "block-l": {
+        path: "M 380 570 L 380 530 L 260 530 L 260 490",
+        steps: [
+          "Start at the Main Gate.",
+          "Enter the campus and bear left past Parking 1.",
+          "The First Year Block (Block L) is on your left, near the gate area."
+        ]
+      },
+      "block-p": {
+        path: "M 380 570 L 380 530 L 510 530 L 510 490",
+        steps: [
+          "Start at the Main Gate.",
+          "Enter the campus and bear right past Parking 2.",
+          "The Architecture Block (PDSSSA) is on your right, near the gate area."
+        ]
+      },
+      "block-m": {
+        path: "M 380 570 L 380 330",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight along the central road (~80 meters).",
+          "Pass the Admin Block.",
+          "The Central Library is straight ahead on the main road."
+        ]
+      },
+      "block-k": {
+        path: "M 380 570 L 380 300 L 535 300 L 535 290",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Admin Block and Library.",
+          "At the central junction, turn right (east).",
+          "Walk 30 meters. The Basic Sciences Block is on your right."
+        ]
+      },
+      "block-n": {
+        path: "M 380 570 L 380 480 L 650 480 L 650 340",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight and take the east service road.",
+          "Walk along the road toward the east side of campus.",
+          "The Canteen & Services Zone is on your right."
+        ]
+      },
+      "block-o": {
+        path: "M 380 570 L 380 300 L 660 300 L 660 200",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Library to the central junction.",
+          "Turn right and walk east past the Services Zone.",
+          "Continue north. The Hostel is ahead on your right."
+        ]
+      },
+      "block-f": {
+        path: "M 380 570 L 380 300 L 110 300 L 110 270",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Admin Block and Library to the central junction.",
+          "Turn left (west) onto the cross road.",
+          "Walk ~100 meters. The CSE Block is on your left in the West Academic Zone."
+        ]
+      },
+      "block-g": {
+        path: "M 380 570 L 380 300 L 220 300 L 220 270",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Library to the central junction.",
+          "Turn left (west) onto the cross road.",
+          "Walk ~60 meters. The ISE Block is on your left, next to CSE."
+        ]
+      },
+      "block-d": {
+        path: "M 380 570 L 380 300 L 150 300 L 150 200",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Library to the central junction.",
+          "Turn left (west) and take the secondary road north.",
+          "Walk past CSE/ISE. The ECE Block is ahead, north of the Academic Zone."
+        ]
+      },
+      "block-e": {
+        path: "M 380 570 L 380 300 L 270 300 L 270 200",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Library to the central junction.",
+          "Turn left (west).",
+          "Walk 40 meters and head north. The EEE Block is next to ECE."
+        ]
+      },
+      "block-b": {
+        path: "M 380 570 L 380 300 L 135 300 L 135 190 L 135 110",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Library to the central junction.",
+          "Turn left (west) onto the cross road.",
+          "Walk to the far west, then turn right (north).",
+          "Walk 100 meters north. The Civil Engineering Block is at the far north-west."
+        ]
+      },
+      "block-c": {
+        path: "M 380 570 L 380 300 L 270 300 L 270 190 L 270 110",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight past the Library to the central junction.",
+          "Turn left (west) and head north past EEE.",
+          "Continue walking north. The Mechanical Block is in the north zone."
+        ]
+      },
+      "block-i": {
+        path: "M 380 570 L 380 300 L 380 190 L 405 190 L 405 110",
+        steps: [
+          "Start at the Main Gate.",
+          "Walk straight along the central road all the way north.",
+          "Pass the Library and continue past the central junction.",
+          "The CCT Block is at the far north end of the central road."
+        ]
+      }
+    };
 
     function showBlockInfo(blockId) {
       const block = getBlock(blockId);
@@ -413,10 +548,49 @@
         r.classList.toggle("active", r.dataset.blockId === blockId);
       });
 
+      // SVG path drawing
+      if (svg) {
+        const existing = document.getElementById("walking-route-line");
+        if (existing) existing.remove();
+
+        const routeData = routes[blockId];
+        if (routeData) {
+          const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          pathEl.setAttribute("id", "walking-route-line");
+          pathEl.setAttribute("class", "map-route-path");
+          pathEl.setAttribute("d", routeData.path);
+          pathEl.setAttribute("stroke", "var(--pdacek-primary)");
+          pathEl.setAttribute("stroke-width", "5");
+          pathEl.setAttribute("fill", "none");
+          svg.appendChild(pathEl);
+        }
+      }
+
       const blockImg = getRecordImageUrl(block, "block");
       let html = `${renderLocationImage(blockImg, block.name, "card")}
         <h3 class="h5 fw-bold mt-3">${escapeHtml(block.name)}</h3>
-        <p class="small text-muted-pdacek">${escapeHtml(block.description)}</p>`;
+        <p class="small text-muted-pdacek mb-3">${escapeHtml(block.description)}</p>`;
+
+      const routeData = routes[blockId];
+      if (routeData) {
+        html += `<div class="card route-steps-card p-3 mb-3">
+          <h4 class="h6 fw-bold mb-2">🚶 Walking Route (From Gate)</h4>
+          <ol class="list-unstyled mb-0 d-flex flex-column gap-2">`;
+        routeData.steps.forEach((step) => {
+          let icon = "🐾";
+          if (step.includes("straight")) icon = "⬆️";
+          else if (step.includes("left")) icon = "👈";
+          else if (step.includes("right")) icon = "👉";
+          else if (step.includes("Start")) icon = "🚶";
+          else if (step.includes("Library") || step.includes("Block") || step.includes("Zone")) icon = "📍";
+          
+          html += `<li class="route-step-item">
+            <span class="route-step-icon">${icon}</span>
+            <div>${escapeHtml(step)}</div>
+          </li>`;
+        });
+        html += `</ol></div>`;
+      }
 
       if (departments.length) {
         html += `<h4 class="h6 mt-3">Departments</h4><ul class="small mb-0">`;
@@ -458,7 +632,7 @@
       const el = document.querySelector(`[data-block-id="${highlightId}"]`);
       el?.scrollIntoView({ behavior: "smooth", block: "center" });
     } else {
-      sidebar.innerHTML = `<p class="text-muted-pdacek mb-0">Click a building on the map to see departments and facilities in that block.</p>`;
+      sidebar.innerHTML = `<p class="text-muted-pdacek mb-0">Click a building on the map to see departments, facilities, and walking directions from the Main Gate.</p>`;
     }
   }
 

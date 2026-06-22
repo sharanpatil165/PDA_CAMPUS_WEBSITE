@@ -811,3 +811,321 @@ mark.search-highlight {
 [data-theme="dark"] .navbar-toggler-icon {
   filter: invert(1);
 }
+
+/* Chatbot Assistant Styles */
+.pdacek-chatbot-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1080;
+  font-family: inherit;
+}
+
+.chatbot-toggle-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--pdacek-primary);
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: white;
+}
+
+.chatbot-toggle-btn:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: var(--pdacek-accent);
+  color: #1a1a2e;
+}
+
+.chatbot-toggle-btn .close-icon {
+  display: none;
+  font-size: 1.25rem;
+}
+
+.chatbot-toggle-btn .chat-icon {
+  font-size: 1.5rem;
+}
+
+/* Toggle Active State */
+.pdacek-chatbot-widget.chatbot-open .chatbot-toggle-btn {
+  transform: rotate(90deg);
+  background: var(--pdacek-surface);
+  border: 1px solid var(--pdacek-border);
+  color: var(--pdacek-text);
+  box-shadow: var(--pdacek-shadow);
+}
+
+.pdacek-chatbot-widget.chatbot-open .chatbot-toggle-btn .chat-icon {
+  display: none;
+}
+
+.pdacek-chatbot-widget.chatbot-open .chatbot-toggle-btn .close-icon {
+  display: block;
+}
+
+/* Chat Window */
+.chatbot-window {
+  position: absolute;
+  bottom: 72px;
+  right: 0;
+  width: 360px;
+  max-width: calc(100vw - 48px);
+  height: 480px;
+  max-height: calc(100vh - 120px);
+  background: var(--pdacek-surface);
+  border: 1px solid var(--pdacek-border);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.pdacek-chatbot-widget.chatbot-open .chatbot-window {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Chat Header */
+.chatbot-header {
+  padding: 1rem;
+  background: var(--pdacek-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chatbot-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.chatbot-status {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.chatbot-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-close-btn:hover {
+  opacity: 1;
+}
+
+/* Chat Messages */
+.chat-messages-log {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chat-message {
+  display: flex;
+  max-width: 85%;
+}
+
+.chat-message.bot-msg {
+  align-self: flex-start;
+}
+
+.chat-message.user-msg {
+  align-self: flex-end;
+}
+
+.msg-bubble {
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.bot-msg .msg-bubble {
+  background: var(--pdacek-bg);
+  color: var(--pdacek-text);
+  border-top-left-radius: 0.25rem;
+  border: 1px solid var(--pdacek-border);
+}
+
+.user-msg .msg-bubble {
+  background: var(--pdacek-primary);
+  color: white;
+  border-top-right-radius: 0.25rem;
+}
+
+/* Suggestions scroll area */
+.chat-suggestions-container {
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--pdacek-border);
+  background: var(--pdacek-bg);
+}
+
+.chat-suggestions-scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.chat-suggestions-scroll::-webkit-scrollbar {
+  display: none; /* Safari/Chrome */
+}
+
+.suggestion-chip {
+  white-space: nowrap;
+  background: var(--pdacek-surface);
+  border: 1px solid var(--pdacek-border);
+  color: var(--pdacek-text);
+  padding: 0.35rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.suggestion-chip:hover {
+  background: var(--pdacek-primary);
+  border-color: var(--pdacek-primary);
+  color: white;
+}
+
+/* Chat Input form */
+.chat-input-form {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid var(--pdacek-border);
+  background: var(--pdacek-surface);
+}
+
+.chat-input-field {
+  flex: 1;
+  background: var(--pdacek-bg);
+  border: 1px solid var(--pdacek-border);
+  color: var(--pdacek-text);
+  padding: 0.5rem 0.85rem;
+  border-radius: 1.5rem;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.chat-input-field:focus {
+  border-color: var(--pdacek-primary);
+}
+
+.chat-submit-btn {
+  background: var(--pdacek-primary);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.chat-submit-btn:hover {
+  background: var(--pdacek-accent);
+  color: #1a1a2e;
+}
+
+/* Bot Search Results Inside Bubble */
+.bot-search-result-item {
+  background: var(--pdacek-surface);
+  border: 1px solid var(--pdacek-border);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.text-light-directions {
+  opacity: 0.85;
+}
+
+/* Typing indicator dots */
+.typing-indicator-msg .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--pdacek-text);
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite both;
+  opacity: 0.6;
+}
+
+.typing-indicator-msg .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator-msg .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0.6); }
+  40% { transform: scale(1) translateY(-4px); }
+}
+
+/* Walking Route Styles */
+.map-route-path {
+  stroke-dasharray: 10, 8;
+  animation: routeFlow 1s linear infinite;
+  filter: drop-shadow(0px 0px 3px var(--pdacek-primary));
+}
+
+@keyframes routeFlow {
+  from {
+    stroke-dashoffset: 36;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.route-steps-card {
+  border-left: 3px solid var(--pdacek-primary) !important;
+  background: var(--pdacek-bg) !important;
+}
+
+.route-step-item {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.route-step-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+

@@ -47,78 +47,131 @@
 
       <div class="campus-map-container">
         <div class="campus-svg-wrap">
-          <svg class="campus-svg" viewBox="0 0 720 520" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive campus schematic map">
+          <svg class="campus-svg" viewBox="0 0 760 600" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive campus schematic map">
             <defs>
               <pattern id="grass" width="12" height="12" patternUnits="userSpaceOnUse">
                 <rect width="12" height="12" fill="#e8f0e4"/>
                 <circle cx="3" cy="3" r="1" fill="#c5d9bc" opacity="0.5"/>
               </pattern>
             </defs>
-            <rect width="720" height="520" fill="url(#grass)"/>
-            <text x="360" y="28" class="map-label" style="font-size: 14px;">PDACEK Campus — Schematic (71 acres · Main Gate at Bottom)</text>
+            <rect width="760" height="600" fill="url(#grass)"/>
+            <text x="380" y="24" class="map-label" style="font-size: 13px;">PDACEK Campus — Schematic Layout (71 acres · Main Gate at Bottom)</text>
 
-            <!-- Main gate -->
-            <rect id="region-gate" class="map-region" data-block-id="block-gate" x="330" y="480" width="60" height="30" fill="#6c757d" rx="4"/>
-            <text x="360" y="500" class="map-label" fill="#fff" style="pointer-events:none;">MAIN GATE</text>
+            <!-- ═══════ ROADS ═══════ -->
+            <!-- Main central road (gate to north) -->
+            <path d="M380 560 L380 50" stroke="#adb5bd" stroke-width="8" fill="none" stroke-dasharray="4 4"/>
+            <!-- East-West cross road -->
+            <path d="M60 300 L700 300" stroke="#adb5bd" stroke-width="6" fill="none"/>
+            <!-- Secondary east road near gate -->
+            <path d="M380 480 L650 480" stroke="#bbb" stroke-width="4" fill="none" stroke-dasharray="3 3"/>
+            <!-- Secondary west road -->
+            <path d="M380 190 L100 190" stroke="#bbb" stroke-width="4" fill="none" stroke-dasharray="3 3"/>
 
-            <!-- Paths -->
-            <path d="M360 480 L360 120" stroke="#adb5bd" stroke-width="8" fill="none" stroke-dasharray="4 4"/>
-            <path d="M120 280 L600 280" stroke="#adb5bd" stroke-width="6" fill="none"/>
+            <!-- ═══════ MAIN GATE ═══════ -->
+            <rect id="region-gate" class="map-region" data-block-id="block-gate" x="350" y="555" width="60" height="30" fill="#6c757d" rx="4"/>
+            <text x="380" y="574" class="map-label" fill="#fff" style="pointer-events:none;">MAIN GATE</text>
 
-            <!-- block-a Admin -->
-            <rect id="region-admin" class="map-region" data-block-id="block-a" x="300" y="400" width="120" height="70" fill="#b8c9e8" rx="4"/>
-            <text x="360" y="438" class="map-label">Admin</text>
+            <!-- ═══════ PARKING ZONES ═══════ -->
+            <!-- Parking 1: Near gate (left) -->
+            <rect x="240" y="530" width="90" height="35" fill="#d5d5d5" rx="4" stroke="#999" stroke-width="1"/>
+            <text x="285" y="552" class="map-label" style="font-size:9px; fill:#555;">🅿️ Parking 1</text>
+            <!-- Parking 2: Near gate (right) -->
+            <rect x="440" y="530" width="90" height="35" fill="#d5d5d5" rx="4" stroke="#999" stroke-width="1"/>
+            <text x="485" y="552" class="map-label" style="font-size:9px; fill:#555;">🅿️ Parking 2</text>
+            <!-- Parking 3: Near services zone -->
+            <rect x="650" y="420" width="70" height="35" fill="#d5d5d5" rx="4" stroke="#999" stroke-width="1"/>
+            <text x="685" y="442" class="map-label" style="font-size:9px; fill:#555;">🅿️ P3</text>
 
-            <!-- block-l First Year -->
-            <rect id="region-fy" class="map-region" data-block-id="block-l" x="480" y="400" width="100" height="70" fill="#d4e4f7" rx="4"/>
-            <text x="530" y="438" class="map-label">FY Block</text>
+            <!-- ═══════ NEAR GATE ZONE ═══════ -->
 
-            <!-- block-m Library -->
-            <rect id="region-library" class="map-region" data-block-id="block-m" x="300" y="300" width="120" height="80" fill="#f0d78c" rx="4"/>
-            <text x="360" y="345" class="map-label">Library</text>
+            <!-- block-p Architecture (near gate, right side) -->
+            <rect id="region-arch" class="map-region" data-block-id="block-p" x="450" y="460" width="120" height="60" fill="#e8d0f0" rx="4"/>
+            <text x="510" y="488" class="map-label" style="font-size:9px;">Architecture</text>
+            <text x="510" y="500" class="map-label" style="font-size:7px;">(PDSSSA)</text>
 
-            <!-- block-k Basic Sciences -->
-            <rect id="region-science" class="map-region" data-block-id="block-k" x="480" y="300" width="100" height="80" fill="#c9e4c5" rx="4"/>
-            <text x="530" y="345" class="map-label">Sciences</text>
+            <!-- block-l First Year Block (near gate, left side) -->
+            <rect id="region-fy" class="map-region" data-block-id="block-l" x="200" y="460" width="120" height="60" fill="#d4e4f7" rx="4"/>
+            <text x="260" y="495" class="map-label">FY Block</text>
+
+            <!-- ═══════ CENTRAL ZONE ═══════ -->
+
+            <!-- block-a Admin (central, further inside campus) -->
+            <rect id="region-admin" class="map-region" data-block-id="block-a" x="310" y="370" width="140" height="70" fill="#b8c9e8" rx="4"/>
+            <text x="380" y="405" class="map-label" style="font-size:11px;">Admin Block</text>
+            <text x="380" y="418" class="map-label" style="font-size:7px;">Principal · Exam · Accounts</text>
+
+            <!-- block-m Library (central campus) -->
+            <rect id="region-library" class="map-region" data-block-id="block-m" x="310" y="250" width="140" height="80" fill="#f0d78c" rx="4"/>
+            <text x="380" y="290" class="map-label" style="font-size:11px;">📚 Library</text>
+            <text x="380" y="305" class="map-label" style="font-size:7px;">Central Library</text>
+
+            <!-- block-k Basic Sciences (right of library) -->
+            <rect id="region-science" class="map-region" data-block-id="block-k" x="480" y="250" width="110" height="80" fill="#c9e4c5" rx="4"/>
+            <text x="535" y="290" class="map-label" style="font-size:10px;">Sciences</text>
+            <text x="535" y="303" class="map-label" style="font-size:7px;">Phy · Chem · Math</text>
+
+            <!-- ═══════ WEST ACADEMIC ZONE (Left side) ═══════ -->
 
             <!-- block-f CSE -->
-            <rect id="region-cse" class="map-region" data-block-id="block-f" x="80" y="180" width="90" height="90" fill="#a8d4f0" rx="4"/>
-            <text x="125" y="230" class="map-label">CSE</text>
+            <rect id="region-cse" class="map-region" data-block-id="block-f" x="60" y="230" width="100" height="80" fill="#a8d4f0" rx="4"/>
+            <text x="110" y="270" class="map-label" style="font-size:10px;">CSE</text>
+            <text x="110" y="283" class="map-label" style="font-size:7px;">Computer Science</text>
 
             <!-- block-g ISE -->
-            <rect id="region-ise" class="map-region" data-block-id="block-g" x="180" y="180" width="80" height="90" fill="#9ec8e8" rx="4"/>
-            <text x="220" y="230" class="map-label">ISE</text>
+            <rect id="region-ise" class="map-region" data-block-id="block-g" x="170" y="230" width="100" height="80" fill="#9ec8e8" rx="4"/>
+            <text x="220" y="270" class="map-label" style="font-size:10px;">ISE</text>
+            <text x="220" y="283" class="map-label" style="font-size:7px;">Info Science</text>
+
+            <!-- ═══════ MIDDLE ACADEMIC ZONE ═══════ -->
 
             <!-- block-d ECE -->
-            <rect id="region-ece" class="map-region" data-block-id="block-d" x="280" y="180" width="90" height="90" fill="#b5a8e8" rx="4"/>
-            <text x="325" y="230" class="map-label">ECE</text>
+            <rect id="region-ece" class="map-region" data-block-id="block-d" x="100" y="130" width="100" height="70" fill="#b5a8e8" rx="4"/>
+            <text x="150" y="168" class="map-label" style="font-size:10px;">ECE</text>
+            <text x="150" y="180" class="map-label" style="font-size:7px;">Electronics</text>
 
             <!-- block-e EEE -->
-            <rect id="region-eee" class="map-region" data-block-id="block-e" x="390" y="180" width="80" height="90" fill="#c8b8e8" rx="4"/>
-            <text x="430" y="230" class="map-label">EEE</text>
+            <rect id="region-eee" class="map-region" data-block-id="block-e" x="220" y="130" width="100" height="70" fill="#c8b8e8" rx="4"/>
+            <text x="270" y="168" class="map-label" style="font-size:10px;">EEE</text>
+            <text x="270" y="180" class="map-label" style="font-size:7px;">Electrical</text>
 
+            <!-- ═══════ NORTH ZONE (Far from gate) ═══════ -->
 
             <!-- block-b Civil -->
-            <rect id="region-civil" class="map-region" data-block-id="block-b" x="80" y="60" width="100" height="90" fill="#e8c4a8" rx="4"/>
-            <text x="130" y="110" class="map-label">Civil</text>
+            <rect id="region-civil" class="map-region" data-block-id="block-b" x="80" y="40" width="110" height="70" fill="#e8c4a8" rx="4"/>
+            <text x="135" y="78" class="map-label" style="font-size:10px;">Civil</text>
+            <text x="135" y="91" class="map-label" style="font-size:7px;">Civil Engineering</text>
 
             <!-- block-c Mechanical -->
-            <rect id="region-mech" class="map-region" data-block-id="block-c" x="200" y="60" width="110" height="90" fill="#e8b8a0" rx="4"/>
-            <text x="255" y="110" class="map-label">Mech/Auto</text>
+            <rect id="region-mech" class="map-region" data-block-id="block-c" x="210" y="40" width="120" height="70" fill="#e8b8a0" rx="4"/>
+            <text x="270" y="78" class="map-label" style="font-size:10px;">Mech/Auto</text>
+            <text x="270" y="91" class="map-label" style="font-size:7px;">Workshops</text>
 
             <!-- block-i CCT -->
-            <rect id="region-cct" class="map-region" data-block-id="block-i" x="330" y="60" width="100" height="90" fill="#e0d0a8" rx="4"/>
-            <text x="380" y="110" class="map-label">CCT</text>
+            <rect id="region-cct" class="map-region" data-block-id="block-i" x="350" y="40" width="110" height="70" fill="#e0d0a8" rx="4"/>
+            <text x="405" y="78" class="map-label" style="font-size:10px;">CCT</text>
+            <text x="405" y="91" class="map-label" style="font-size:7px;">Ceramic & Cement</text>
 
-            <!-- block-n Services -->
-            <rect id="region-services" class="map-region" data-block-id="block-n" x="550" y="300" width="130" height="170" fill="#f5c6a8" rx="4"/>
-            <text x="615" y="375" class="map-label">Canteen</text>
-            <text x="615" y="390" class="map-label" style="font-size:8px">Auditorium · Bank</text>
+            <!-- ═══════ EAST SERVICES ZONE ═══════ -->
 
-            <text x="360" y="505" class="map-label" style="font-size:9px; fill:#6c757d;">Not to scale — for campus navigation demo</text>
+            <!-- block-n Services / Canteen -->
+            <rect id="region-services" class="map-region" data-block-id="block-n" x="600" y="250" width="120" height="180" fill="#f5c6a8" rx="4"/>
+            <text x="660" y="320" class="map-label" style="font-size:10px;">🍔 Canteen</text>
+            <text x="660" y="340" class="map-label" style="font-size:7px;">Auditorium</text>
+            <text x="660" y="355" class="map-label" style="font-size:7px;">Bank · Sports</text>
+            <text x="660" y="370" class="map-label" style="font-size:7px;">SAC · Medical</text>
+
+            <!-- block-o Hostel (far east) -->
+            <rect id="region-hostel" class="map-region" data-block-id="block-o" x="600" y="130" width="120" height="70" fill="#d4c9a8" rx="4"/>
+            <text x="660" y="168" class="map-label" style="font-size:10px;">🏠 Hostel</text>
+
+            <!-- ═══════ LABELS ═══════ -->
+            <text x="380" y="585" class="map-label" style="font-size:9px; fill:#6c757d;">Schematic — for campus navigation (not to exact scale)</text>
+            <text x="110" y="215" class="map-label" style="font-size:8px; fill:#888;">← West Academic Zone</text>
+            <text x="660" y="243" class="map-label" style="font-size:8px; fill:#888;">East Services →</text>
+
           </svg>
           <div class="map-legend">
-            <span>Click any block · Highlight via search “View on map”</span>
+            <span>Click any block for details & walking route · 🅿️ = Parking zones</span>
           </div>
         </div>
 
@@ -160,5 +213,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="assets/js/campus-data.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/chatbot.js" defer></script>
 </body>
 </html>

@@ -10,7 +10,18 @@ const campusData = {
     established: 1958,
     website: "https://pdacek.ac.in",
     society: "Hyderabad Karnataka Education (HKE) Society",
+    founder: "Late Shri Mahadevappa Rampure",
     mapCoords: { lat: 17.3297, lng: 76.8343 },
+    history: "Founded in 1958 by the HKE Society under the leadership of Late Shri Mahadevappa Rampure. It is the first institution of the HKE Society and became autonomous in the academic year 2007-08.",
+    vision: "To be an institute of excellence in technical education and research that serves the needs of industry and society.",
+    mission: [
+      "To provide a high-quality educational experience for students with values and ethics that enables them to become leaders in their chosen professions.",
+      "To explore, create, and develop innovations in engineering and science through research and development activities."
+    ],
+    achievements: [
+      "First college in Karnataka to offer Electronics and Communication Engineering (ECE) in 1967.",
+      "First college in South India to start Ceramic and Cement Technology (CCT) course in 1982."
+    ]
   },
 
   /** Base path for building photos (see assets/img/buildings/PHOTOS.md) */
@@ -29,8 +40,10 @@ const campusData = {
     { id: "block-i", name: "Ceramic & Cement Technology Block", description: "CCT refractory and materials labs.", svgRegionId: "region-cct", imageKey: "cct", photo: "cct-department.jpg" },
     { id: "block-k", name: "Basic Sciences Block", description: "Physics, Chemistry, Mathematics departments.", svgRegionId: "region-science", imageKey: "science", photo: "chemistry-dept.jpg" },
     { id: "block-l", name: "First Year Block", description: "Common first-year classrooms and tutorial halls.", svgRegionId: "region-fy", imageKey: "fy", photo: "1st-yearblock.jpg" },
+    { id: "block-p", name: "School of Architecture", description: "P.D. Salgar School of Architecture (PDSSSA). Design studios, architecture department offices, and classrooms.", svgRegionId: "region-arch", imageKey: "arch", photo: "architecture-dept.jpg" },
     { id: "block-m", name: "Central Library", description: "Multi-storey library with reading halls.", svgRegionId: "region-library", imageKey: "library", photo: "library.jpg" },
     { id: "block-n", name: "Student Services Zone", description: "Canteen, bank, cooperative store, 1000-capacity auditorium, first aid & medical facilities.", svgRegionId: "region-services", imageKey: "canteen", photo: "canteen.jpg" },
+    { id: "block-o", name: "Student Hostel Block", description: "Residential hostel facilities for campus students.", svgRegionId: "region-hostel", imageKey: "hostel", photo: "hostel.jpg" },
     { id: "block-gate", name: "Main Gate", description: "Main entrance to the PDACEK campus. Security cabin, visitor registration, and start of the central road leading to all blocks.", svgRegionId: "region-gate", imageKey: "gate", photo: "main-gate.jpg" },
   ],
 
@@ -180,6 +193,18 @@ const campusData = {
       classrooms: ["FY-101", "FY-102", "FY-103", "FY-Tutorial-1"],
       labs: ["Engineering Workshop", "Basic Programming Lab"],
       description: "Daily classroom block for all 1st and 2nd semester engineering students across all branches.",
+    },
+    {
+      id: "arch",
+      name: "Architecture (B.Arch) — PDSSSA",
+      blockId: "block-p",
+      floor: "Ground & 1st Floor",
+      hod: "Prof. Architecture — HOD",
+      photo: "architecture-dept.jpg",
+      directions: "From main gate, turn right immediately past Parking 2. The Architecture block (PDSSSA) is on your right side.",
+      keywords: ["architecture", "arch", "barch", "design", "pdsssa", "salgar"],
+      classrooms: ["ARCH-101", "ARCH-102", "Studio-1", "Studio-2"],
+      labs: ["Model Making Lab", "Computer Applications Lab"],
     },
   ],
 
@@ -462,7 +487,84 @@ const campusData = {
       keywords: ["auditorium", "hall", "convocation", "seminar hall", "events", "1000 capacity"],
       description: "1000-capacity main auditorium and 200-seater gallery hall for college events, graduation ceremonies, and seminars.",
     },
+    {
+      id: "hostel",
+      name: "Student Hostels",
+      category: "Housing",
+      blockId: "block-o",
+      floor: "Ground to 3rd Floor",
+      hours: "24/7 for residents",
+      photo: "hostel.jpg",
+      directions: "Walk past the Student Services Zone (Canteen/Bank) towards the far northeast end of the campus road.",
+      keywords: ["hostel", "rooms", "dorm", "accommodation", "residence", "mess"],
+      description: "On-campus hostel accommodations with mess facilities, recreational areas, and 24/7 security.",
+    },
+    {
+      id: "parking-1",
+      name: "Gate Parking Zone (West)",
+      category: "Services",
+      blockId: "block-gate",
+      floor: "Ground Level",
+      hours: "24/7",
+      directions: "Immediately on the left upon entering the Main Gate, next to First Year Block.",
+      keywords: ["parking", "vehicle", "car", "bike", "scooter", "gate"],
+      description: "Parking zone near the main gate and First Year Block for visitors and students.",
+    },
+    {
+      id: "parking-2",
+      name: "Gate Parking Zone (East)",
+      category: "Services",
+      blockId: "block-gate",
+      floor: "Ground Level",
+      hours: "24/7",
+      directions: "Immediately on the right upon entering the Main Gate, next to the Architecture block.",
+      keywords: ["parking", "vehicle", "car", "bike", "scooter", "gate"],
+      description: "Parking zone near the main gate and Architecture block.",
+    },
+    {
+      id: "parking-3",
+      name: "Services Parking Zone (East)",
+      category: "Services",
+      blockId: "block-n",
+      floor: "Ground Level",
+      hours: "24/7",
+      directions: "Located near the Canteen and Student Services zone.",
+      keywords: ["parking", "vehicle", "car", "bike", "scooter", "canteen", "services"],
+      description: "Parking area serving the Canteen, Bank, and Auditorium zone.",
+    }
   ],
+  faqs: [
+    {
+      q: "How to get admission in PDACEK?",
+      a: "Admission is based on Visvesvaraya Technological University (VTU) guidelines. Students can join via KEA (CET) counselling, COMED-K exam, or through Management Quota. For eligibility, you must pass 12th grade with physics, math, and chemistry/electronics/CS.",
+      keywords: ["admission", "apply", "join", "eligibility", "seat", "quota", "kea", "cet", "comedk"]
+    },
+    {
+      q: "Who should I contact for admissions?",
+      a: "For admission queries, you can contact the official admission coordinators:<br>1. <strong>Dr. M S Aspalli</strong>: +91 9449618898<br>2. <strong>Mr. Sangamesh Jeevangi</strong>: +91 9743841111",
+      keywords: ["contact", "admission contact", "admission number", "phone number", "call", "helpdesk", "office", "jeevangi", "aspalli"]
+    },
+    {
+      q: "What is the contact number and address of the college?",
+      a: "<strong>Address:</strong> Aiwan-E-Shahi Area, Kalaburagi, Karnataka - 585102.<br><strong>Office Phone:</strong> 08472-224360<br><strong>Email:</strong> principal@pdaengg.com / principal@pdaengg.ac.in",
+      keywords: ["address", "contact number", "phone number", "phone", "email", "mail", "pin code", "location", "pda number"]
+    },
+    {
+      q: "Tell me about the Placement Cell and companies visiting.",
+      a: "PDACEK has an active Training and Placement Cell that organizes pre-placement training (aptitude, communication, coding skills) starting from the 1st semester. Top recruiting companies include TCS, Wipro, Cognizant, Infosys, and others. Internships are mandatory for all undergraduate students.",
+      keywords: ["placement", "job", "recruit", "companies", "tcs", "wipro", "internship", "salary", "package", "training"]
+    },
+    {
+      q: "Is PDACEK autonomous?",
+      a: "Yes, P.D.A. College of Engineering has been an autonomous institution under Visvesvaraya Technological University (VTU) since the academic year 2007-08.",
+      keywords: ["autonomous", "vtu", "affiliated", "university", "syllabus", "exam", "board"]
+    },
+    {
+      q: "What courses or branches are offered in UG engineering?",
+      a: "PDACEK offers 11 UG engineering courses:<br>- Civil Engineering<br>- Mechanical Engineering<br>- Electrical & Electronics (EEE)<br>- Electronics & Communication (ECE)<br>- Computer Science (CSE)<br>- Information Science (ISE)<br>- Ceramic & Cement Tech (CCT)<br>- Automobile Engineering<br>- Computer Science & Design (CSD)<br>- AI & Machine Learning (AIML)<br>- Architecture (B.Arch)",
+      keywords: ["courses", "branches", "ug", "be", "btech", "degree", "departments", "intake"]
+    }
+  ]
 };
 
 /** Get block by id */
